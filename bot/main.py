@@ -1,4 +1,19 @@
 import asyncio
+import sys
+
+# Python 3.10+ & Pyrogram fix: Set event loop before any import
+try:
+    asyncio.get_event_loop()
+except RuntimeError:
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
+# Ab yahan se apne baki imports shuru karein
+from aiohttp import web
+from pyrogram import Client
+from config import config
+from database import db
+import asyncio
 import os
 from aiohttp import web
 from pyrogram import Client
