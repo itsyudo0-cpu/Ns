@@ -1,3 +1,16 @@
+import asyncio
+import sys
+
+# Python 3.10+ event loop fix for Pyrogram
+try:
+    asyncio.get_event_loop()
+except RuntimeError:
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
+from pyrogram import Client, idle
+# (Baki aapke baaki saare imports aur code iske baad aayenge)
+
 """
 NEU PRODUCT BOT — Main Asynchronous Entrypoint
 Runs the Pyrogram MTProto Bot Client concurrently with the aiohttp Keep-Alive & Webhook Server
