@@ -158,3 +158,29 @@ if __name__ == "__main__":
         asyncio.set_event_loop(loop)
     
     loop.run_until_complete(main())
+
+async def main():
+    # Aiohttp web server setup for Render port binding
+    app = web.Application()
+    app.router.add_get("/", lambda r: web.json_response({"status": "alive"}))
+    app.router.add_get("/health", lambda r: web.json_response({"status": "alive"}))
+    
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, "0.0.0.0", PORT)
+    await site.start()
+    print(f"🌐 Web server listening on port {PORT}")
+
+    # Start Pyrogram Bot
+    await bot.start()
+    print("🤖 NOHARA STORE BOT is online!")
+    await asyncio.Event().wait()
+
+if __name__ == "__main__":
+    try:
+        loop = asyncio.get_event_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+    
+    loop.run_until_complete(main())
